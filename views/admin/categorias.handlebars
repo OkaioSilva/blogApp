@@ -1,0 +1,51 @@
+<h2>Lista de categorias: </h2>
+<a href="/admin/categorias/add"><button class="btn btn-success mt-4"> Nova categoria</button></a>
+{{!-- renderizar as categorias na tela --}}
+
+{{#each categorias}}
+
+    <div class="card mt-4">
+        <div class="card-body">
+            <h4>{{nome}}</h4>
+            <small>Slug: {{slug}}</small><br>
+            <small>{{date}}</small> <br>
+            <div class="container">
+                
+                <div class="row justify-content-md-center">
+                    {{!-- edit --}}
+                    <div class="col col-lg-2">
+                        <a href="/admin/categorias/edit/{{_id}}"><button class="btn btn-success mt-4">Edit</button></a>
+                    </div>
+
+                    <div class="col">
+                        {{!-- delete --}}
+                        <form action="/admin/categorias/deletar/{{_id}}" method="post">
+                            <input type="hidden" name="id" value="{{_id}}">
+                            <button type="submit" class="btn btn-danger mt-4">Deletar</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{{else}} 
+    <h4 class="mt-3"> Nenhuma categoria registrada!</h4>
+{{/each}}
+
+{{!-- <div class="container">
+    <div class="row justify-content-md-center">
+                        <div class="col col-lg-2">
+                         <a href="categorias/edit/{{_id}}">
+                             <button class="btn btn-sm btn-warning mt-3">Editar categoria</button>
+                         </a>
+                        </div>
+                <div class="col">
+            <form action="/admin/categorias/deletar/{{_id}}" method="post">
+              <input type="hidden" name="id" value="{{_id}}" />
+              <button type="submit" class="btn btn-danger btn-sm mt-3">Excluir categoria</button>
+            </form>
+                </div>
+      </div>
+    </div>
+</div> --}}

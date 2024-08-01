@@ -8,15 +8,5 @@
 * Este é o primeiro projeto backend que faço!
 
 ### tecnologias:
-* Node.js
-    * pacotes: {
-       * "connect-flash": "^0.1.1",
-       * "express": "^4.19.2",
-       * "express-handlebars": "^7.1.3",
-       * "express-session": "^1.18.0",
-       * "mongoose": "^8.5.1"
-  }
-    
+* Node.js   
 * MongoDB
-
-* bootstrap

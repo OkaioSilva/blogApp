@@ -1,6 +1,5 @@
 // 1 - carregando módulos
     const express = require('express')
-    // import express from 'express';
     const app = express()
     const { engine } = require ('express-handlebars');
     const admin = require('./routes/admin')
@@ -8,6 +7,9 @@
     const mongoose = require('mongoose')
     const session = require('express-session')
     const flash = require('connect-flash')
+    
+    require('./models/Postagem')
+    const Postagem = mongoose.model('postagens')
 
 
 
@@ -51,6 +53,18 @@
         app.use(express.static(path.join(__dirname, "public")))
 
 //3 - rotas
+    app.get('/', (req, res)=>{
+        Postagem.find().lean().sort({data: 'desc'}).limit(3).then((postagens)=>{
+            res.render('index', {postagens:postagens})
+            
+        }).catch((e)=>{
+            req.flash("error_msg", "Houve um erro ao listar as postagens"+ e)
+            res.redirect('/404')
+        })
+    })
+    app.get('/404', (req, res)=>{
+        res.send("Error 404!")
+    })
     app.use('/admin', admin)
 
 //4 - outros

@@ -2,8 +2,10 @@ const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
 require('../models/Categoria')
-
+require('../models/Postagem')
 const Categoria = mongoose.model('categorias')
+const Postagem = mongoose.model('postagens')
+
 
 // rotas admin
 
@@ -120,6 +122,71 @@ router.post('/categorias/deletar/:id', (req, res)=>{
 
     })
 })
+
+// postagem
+router.get('/postagens', (req, res)=>{
+    res.render("admin/postagens")
+})
+
+// add postagem
+router.get('/postagens/add', (req, res)=>{
+    Categoria.find().lean().then((categorias)=>{
+        res.render("admin/addPostagem", {categorias: categorias})
+        // req.flash("success_msg", "Categoria carregada com sucesso!")
+
+    }).catch((e)=>{
+        req.flash("error_msg", "Houve um erro ao carregar categoria"+ e)
+        res.redirect('/admin/categorias')
+
+    })
+
+})
+
+// add categoria no banco
+
+router.post("/postagens/nova", (req, res)=>{
+    const erros = []
+    if(!req.body.titulo || typeof req.body.nome === undefined ){
+        erros.push({texto: "Título inválido!"})
+    }
+    if(req.body.nome < 2 ){
+        erros.push({texto: "Nome da categoria muito pequeno"})
+    }
+    if(!req.body.slug || typeof req.body.slug === undefined ){
+        erros.push({texto: "Slug inválido!"})
+    }
+    if(!req.body.descricao || typeof req.body.descricao === undefined ){
+        erros.push({texto: "Descrição inválida!"})
+    }
+    if(!req.body.conteudo || typeof req.body.conteudo === undefined ){
+        erros.push({texto: "Conteúdo inválido!"})
+    }
+
+    if(req.body.categoria === '0'){
+        erros.push({texto:"Categoria inválida, registre uma nova categoria"})
+    }
+    if(erros.length > 0){
+        res.render('admin/addPostagem', {erros: erros})
+    }else{
+        const novaPostagem = {
+            titulo: req.body.titulo,
+            descricao: req.body.descricao,
+            contudo: req.body.conteudo,
+            categoria: req.body.categoria,
+            slug: req.body.slug
+        }
+
+        new Postagem(novaPostagem).save().then(()=>{
+            req.flash('success_msg', 'Postagem criada com sucesso!')
+            res.redirect('/admin/postagens')
+        }).catch((e)=>{
+            req.flash('error_msg', 'Houve um erro ao criar a postagem'+ e)
+            res.redirect('/admin/postagens')
+        })
+    }
+})
+
+
 
 
 module.exports = router

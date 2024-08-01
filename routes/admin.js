@@ -26,6 +26,7 @@ router.get('/categorias', (req, res)=>{
         res.redirect('/admin')
     })
 })
+
 // router to add 
 router.get('/categorias/add', (req, res)=>{
     res.render("admin/addCategorias")
@@ -171,7 +172,7 @@ router.post("/postagens/nova", (req, res)=>{
         const novaPostagem = {
             titulo: req.body.titulo,
             descricao: req.body.descricao,
-            contudo: req.body.conteudo,
+            conteudo: req.body.conteudo,
             categoria: req.body.categoria,
             slug: req.body.slug
         }

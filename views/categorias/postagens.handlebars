@@ -1,0 +1,18 @@
+<h4>{{categoria.nome}}</h4>
+{{#each postagens}}
+    <div class="card mt-4">
+        <div class="card-body">
+            <h3>{{titulo}}</h3>
+            <p>{{descricao}}</p>
+            <a href="/postagem/{{slug}}"><button class="btn btn-info">Leia mais</button></a>
+        
+            <div class=" row">
+                <small class="col">Data de publicação: {{date}}</small>
+
+            </div>
+        </div>
+    </div>
+
+    {{else}}
+    <h5 class="font-monospace">Nenhuma postagem!</h5>
+{{/each}}

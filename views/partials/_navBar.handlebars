@@ -20,12 +20,15 @@
         <li class="nav-item">
           <a class="nav-link" href="/categorias">categorias</a>
         </li>
+        {{#if user}}
+        {{else}}
         <li class="nav-item">
-          <a class="nav-link" href="usuarios/login">login</a>
+          <a class="nav-link" href="../usuarios/login">login</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/usuarios/registro">registro</a>
         </li>
+        {{/if}}
         {{!-- <li class="nav-item dropdown">
           <a
             class="nav-link dropdown-toggle"

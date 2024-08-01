@@ -33,8 +33,11 @@ module.exports = function(passport){
     })
 
     passport.deserializeUser((id, done)=>{
-        Usuario.findById(id, (e, usuario)=>{
-            done(e, usuario)
+        Usuario.findById(id).lean().then((usuario)=>{
+            done(null, usuario)
+            
+        }).catch((e)=>{
+            done(null, false, {message: "algo deu errado"})
         })
     })
 }
